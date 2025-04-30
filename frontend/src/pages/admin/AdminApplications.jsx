@@ -1,15 +1,22 @@
-import { useState } from "react";
-import ApplicationDetailsModal from "../../components/ApplicationDetailsModal";
-
 export default function AdminApplications() {
+  const [basvurular, setBasvurular] = useState([]);
   const [selectedBasvuru, setSelectedBasvuru] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const basvurular = [
-    { id: 1, aday: "Ahmet Yılmaz", ilan: "Dr. Öğr. Üyesi Kadrosu", durum: "Beklemede" },
-    { id: 2, aday: "Mehmet Kaya", ilan: "Doçent Kadrosu", durum: "Onaylandı" },
-    { id: 3, aday: "Ayşe Demir", ilan: "Profesör Kadrosu", durum: "Reddedildi" },
-  ];
+  // Başvuruları API'den çekme
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/admin/applications');
+        const data = await response.json();
+        setBasvurular(data);
+      } catch (error) {
+        console.error("Başvurular alınırken hata oluştu:", error);
+      }
+    };
+
+    fetchApplications();
+  }, []);
 
   const handleOpenModal = (basvuru) => {
     setSelectedBasvuru(basvuru);
@@ -22,9 +29,17 @@ export default function AdminApplications() {
   };
 
   const handleForward = (basvuru) => {
-    console.log(`Başvuru ID: ${basvuru.id} yetkililere yönlendirildi.`);
-    alert(`Başvuru "${basvuru.aday}" yetkililere yönlendirildi.`);
-    handleCloseModal();
+    fetch(`http://localhost:5000/api/admin/applications/${basvuru._id}/forward`, {
+      method: 'POST',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        alert(`Başvuru "${basvuru.candidate.name}" yetkililere yönlendirildi.`);
+        handleCloseModal();
+      })
+      .catch((error) => {
+        console.error("Başvuru yönlendirilirken hata oluştu:", error);
+      });
   };
 
   return (
@@ -42,11 +57,11 @@ export default function AdminApplications() {
         </thead>
         <tbody>
           {basvurular.map((basvuru) => (
-            <tr key={basvuru.id}>
-              <td className="border border-gray-300 px-4 py-2">{basvuru.id}</td>
-              <td className="border border-gray-300 px-4 py-2">{basvuru.aday}</td>
-              <td className="border border-gray-300 px-4 py-2">{basvuru.ilan}</td>
-              <td className="border border-gray-300 px-4 py-2">{basvuru.durum}</td>
+            <tr key={basvuru._id}>
+              <td className="border border-gray-300 px-4 py-2">{basvuru._id}</td>
+              <td className="border border-gray-300 px-4 py-2">{basvuru.candidate.name}</td>
+              <td className="border border-gray-300 px-4 py-2">{basvuru.jobPosting.title}</td>
+              <td className="border border-gray-300 px-4 py-2">{basvuru.status}</td>
               <td className="border border-gray-300 px-4 py-2">
                 <button
                   className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"

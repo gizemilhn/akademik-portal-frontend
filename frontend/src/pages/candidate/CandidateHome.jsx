@@ -1,19 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AnnouncementModal from "../../components/AnnouncementModal";
 
 export default function CandidateHome() {
+  const [ilanlar, setIlanlar] = useState([]); // İlanları tutacak state
   const [selectedIlan, setSelectedIlan] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [aktifKategori, setAktifKategori] = useState("Dr. Öğr. Üyesi");
+  const [aktifKategori, setAktifKategori] = useState("Dr. Öğr. Üyesi"); // Varsayılan kategori
 
-  const ilanlar = [
-    { id: 1, baslik: "Dr. Öğr. Üyesi Kadrosu", kategori: "Dr. Öğr. Üyesi", durum: "Yayında", basvuruTarihi: "2025-04-30", detay: "Bu ilan Dr. Öğr. Üyesi içindir." },
-    { id: 2, baslik: "Doçent Kadrosu", kategori: "Doçent", durum: "Yayında", basvuruTarihi: "2025-05-15", detay: "Bu ilan Doçent içindir." },
-    { id: 3, baslik: "Profesör Kadrosu", kategori: "Profesör", durum: "Başvurusu Biten", basvuruTarihi: "2025-04-15", detay: "Bu ilan Profesör içindir." },
-  ];
+  // API'den ilanları çekme
+  useEffect(() => {
+    const fetchJobPostings = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/admin/job-postings');
+        const data = await response.json();
+        setIlanlar(data); // API'den gelen ilanları state'e kaydediyoruz
+      } catch (error) {
+        console.error("İlanlar alınırken hata oluştu:", error);
+      }
+    };
+
+    fetchJobPostings(); // İlanları API'den çekiyoruz
+  }, []);
 
   // Aktif kategoriye göre ilanları filtreleme
-  const filtrelenmisIlanlar = ilanlar.filter((ilan) => ilan.kategori === aktifKategori);
+  const filtrelenmisIlanlar = ilanlar.filter((ilan) => ilan.category === aktifKategori);
 
   const handleOpenModal = (ilan) => {
     setSelectedIlan(ilan);
@@ -59,11 +69,13 @@ export default function CandidateHome() {
         </thead>
         <tbody>
           {filtrelenmisIlanlar.map((ilan) => (
-            <tr key={ilan.id}>
-              <td className="border border-gray-300 px-4 py-2">{ilan.id}</td>
-              <td className="border border-gray-300 px-4 py-2">{ilan.baslik}</td>
-              <td className="border border-gray-300 px-4 py-2">{ilan.durum}</td>
-              <td className="border border-gray-300 px-4 py-2">{ilan.basvuruTarihi}</td>
+            <tr key={ilan._id}>
+              <td className="border border-gray-300 px-4 py-2">{ilan._id}</td>
+              <td className="border border-gray-300 px-4 py-2">{ilan.title}</td>
+              <td className="border border-gray-300 px-4 py-2">{ilan.status}</td>
+              <td className="border border-gray-300 px-4 py-2">
+                {new Date(ilan.applicationDeadline).toLocaleDateString()}
+              </td>
               <td className="border border-gray-300 px-4 py-2">
                 <button
                   onClick={() => handleOpenModal(ilan)}

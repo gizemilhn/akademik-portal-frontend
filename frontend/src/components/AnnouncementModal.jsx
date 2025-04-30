@@ -20,7 +20,7 @@ export default function AnnouncementModal({ isOpen, onClose, ilan }) {
             Kapat
           </button>
           <button
-            onClick={() => navigate(`/candidate/apply/${ilan.id}`)}
+            onClick={() => navigate(`/candidate/apply/${ilan._id}`)}
             className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
           >
             Başvur

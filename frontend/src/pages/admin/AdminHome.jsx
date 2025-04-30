@@ -1,9 +1,22 @@
+import { useState, useEffect } from "react";
+
 export default function AdminHome() {
-  const ilanlar = [
-    { id: 1, baslik: "Dr. Öğr. Üyesi Kadrosu", durum: "Yayında", basvuruTarihi: "2025-04-30" },
-    { id: 2, baslik: "Doçent Kadrosu", durum: "Yayında", basvuruTarihi: "2025-05-15" },
-    { id: 3, baslik: "Profesör Kadrosu", durum: "Başvurusu Biten", basvuruTarihi: "2025-04-15" },
-  ];
+  const [ilanlar, setIlanlar] = useState([]); // İlanları tutacak state
+
+  // API'den ilanları çekme
+  useEffect(() => {
+    const fetchJobPostings = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/admin/job-postings');
+        const data = await response.json();
+        setIlanlar(data); // Veritabanından gelen ilanları state'e kaydediyoruz
+      } catch (error) {
+        console.error("İlanlar alınırken hata oluştu:", error);
+      }
+    };
+
+    fetchJobPostings(); // İlanları API'den çekiyoruz
+  }, []); // Component ilk render olduğunda çalışacak
 
   return (
     <div>
@@ -14,16 +27,18 @@ export default function AdminHome() {
             <th className="border border-gray-300 px-4 py-2">#</th>
             <th className="border border-gray-300 px-4 py-2">Başlık</th>
             <th className="border border-gray-300 px-4 py-2">Durum</th>
-            <th className="border border-gray-300 px-4 py-2">Son Başvuru Tarihi</th>
+            <th className="border border-gray-300 px-4 py-2">Başvuru Tarihi</th>
           </tr>
         </thead>
         <tbody>
           {ilanlar.map((ilan) => (
-            <tr key={ilan.id}>
-              <td className="border border-gray-300 px-4 py-2">{ilan.id}</td>
-              <td className="border border-gray-300 px-4 py-2">{ilan.baslik}</td>
-              <td className="border border-gray-300 px-4 py-2">{ilan.durum}</td>
-              <td className="border border-gray-300 px-4 py-2">{ilan.basvuruTarihi}</td>
+            <tr key={ilan._id}>
+              <td className="border border-gray-300 px-4 py-2">{ilan._id}</td>
+              <td className="border border-gray-300 px-4 py-2">{ilan.title}</td>
+              <td className="border border-gray-300 px-4 py-2">{ilan.status}</td>
+              <td className="border border-gray-300 px-4 py-2">
+                {new Date(ilan.applicationDeadline).toLocaleDateString()} {/* Başvuru tarihini doğru formatta göster */}
+              </td>
             </tr>
           ))}
         </tbody>

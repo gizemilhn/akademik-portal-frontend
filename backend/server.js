@@ -3,7 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');  // CORS paketini içeri aktaralım
-const authRoutes = require('./routes/authRoutes');  // authRoutes dosyasını içe aktar
+const authRoutes = require('./routes/authRoutes'); 
+const adminRoutes = require('./routes/adminRoutes');
+const managerRoutes = require('./routes/managerRoutes'); // Manager işlemleri için route'ları içe aktaralım
 
 dotenv.config();
 
@@ -31,7 +33,9 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 // Routes
-app.use('/api/auth', authRoutes);  // Auth işlemleri için route'ları kullanıyoruz
+app.use('/api/auth', authRoutes); 
+app.use('/api/admin',adminRoutes);
+app.use('/api/manager',managerRoutes); // Auth işlemleri için route'ları kullanıyoruz
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
