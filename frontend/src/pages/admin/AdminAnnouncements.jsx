@@ -32,6 +32,33 @@ export default function AdminAnnouncements() {
     setIsEditModalOpen(false);
   };
 
+  // İlan güncellenmesi işlemi
+  const handleUpdateAnnouncement = async (updatedIlan) => {
+    console.log("Güncellenen İlan:", updatedIlan); // updatedIlan nesnesini loglayın
+    try {
+      // Eğer _id eksikse işlem yapma
+      if (!updatedIlan._id) {
+        console.error("İlan ID'si eksik!");
+        return;
+      }
+  
+      const response = await fetch(`http://localhost:5000/api/admin/job-postings/${updatedIlan._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedIlan),
+      });
+  
+      const data = await response.json();
+      // Eğer güncelleme başarılıysa, listeyi güncelle
+      setIlanlar(ilanlar.map((ilan) => ilan._id === data._id ? data : ilan));
+    } catch (error) {
+      console.error("İlan güncellenirken hata oluştu:", error);
+    }
+  };
+
+  // Yeni ilan ekleme işlemi
   const handleAddAnnouncement = async (newIlan) => {
     try {
       const response = await fetch('http://localhost:5000/api/admin/job-postings', {
@@ -47,6 +74,8 @@ export default function AdminAnnouncements() {
       console.error("İlan eklenirken hata oluştu:", error);
     }
   };
+
+  // İlan silme işlemi
   const handleDeleteAnnouncement = async (id) => {
     try {
       const response = await fetch(`http://localhost:5000/api/admin/job-postings/${id}`, {
@@ -74,6 +103,7 @@ export default function AdminAnnouncements() {
         <thead>
           <tr className="bg-gray-100">
             <th className="border border-gray-300 px-4 py-2">#</th>
+            <th className="border border-gray-300 px-4 py-2">Kategori</th>
             <th className="border border-gray-300 px-4 py-2">Başlık</th>
             <th className="border border-gray-300 px-4 py-2">Başvuru Tarihi</th>
             <th className="border border-gray-300 px-4 py-2">İşlem</th>
@@ -81,8 +111,9 @@ export default function AdminAnnouncements() {
         </thead>
         <tbody>
           {ilanlar.map((ilan, index) => (
-            <tr key={ilan._id || index}>
+            <tr key={ilan._id}>
               <td className="border border-gray-300 px-4 py-2">{ilan._id}</td>
+              <td className="border border-gray-300 px-4 py-2">{ilan.category}</td>
               <td className="border border-gray-300 px-4 py-2">{ilan.title}</td>
               <td className="border border-gray-300 px-4 py-2">{new Date(ilan.applicationDeadline).toLocaleDateString()}</td>
               <td className="border border-gray-300 px-4 py-2">
@@ -111,11 +142,9 @@ export default function AdminAnnouncements() {
         ilan={selectedIlan}
         onSave={(updatedIlan) => {
           if (selectedIlan) {
-            setIlanlar(
-              ilanlar.map((ilan) => (ilan._id === updatedIlan._id ? updatedIlan : ilan))
-            );
+            handleUpdateAnnouncement(updatedIlan); // İlan güncelleniyor
           } else {
-            handleAddAnnouncement(updatedIlan);
+            handleAddAnnouncement(updatedIlan); // Yeni ilan ekleniyor
           }
           handleCloseEditModal();
         }}

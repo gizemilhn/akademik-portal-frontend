@@ -2,6 +2,10 @@ import { useState } from "react";
 
 export default function ApplicationForm() {
   const [role, setRole] = useState("dr");
+  const [documents, setDocuments] = useState([]);
+  const [ilanId] = useState("123456"); // Örnek sabit ilan ID
+  const [userId] = useState("789012"); // Örnek sabit kullanıcı ID
+  const [status] = useState("Beklemede");
 
   const roleLabel = {
     dr: "Dr. Öğretim Üyesi",
@@ -9,14 +13,46 @@ export default function ApplicationForm() {
     professor: "Profesör",
   };
 
+  const handleFileChange = (e) => {
+    const newFiles = Array.from(e.target.files);
+    setDocuments((prev) => [...prev, ...newFiles]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    documents.forEach((file) => {
+      formData.append("documents", file);
+    });
+
+    formData.append("ilanId", ilanId);
+    formData.append("userId", userId);
+    formData.append("status", status);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/applications", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      console.log("Başvuru başarıyla kaydedildi", data);
+    } catch (error) {
+      console.error("Başvuru kaydedilirken hata oluştu:", error);
+    }
+  };
+
   return (
-    <div className="max-w-5xl mx-auto mt-10 bg-white shadow-2xl p-8 rounded-2xl space-y-10">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-5xl mx-auto mt-10 bg-white shadow-2xl p-8 rounded-2xl space-y-10"
+    >
       <h2 className="text-3xl font-bold">Academic Application Form</h2>
 
-      <div className="space-y-2">
-        <label htmlFor="role" className="font-semibold">Başvuru Yapılan Kadro</label>
+      {/* Kadro Seçimi */}
+      <div>
+        <label className="font-semibold">Başvuru Yapılan Kadro</label>
         <select
-          id="role"
           className="w-full border rounded px-3 py-2"
           value={role}
           onChange={(e) => setRole(e.target.value)}
@@ -27,48 +63,39 @@ export default function ApplicationForm() {
         </select>
       </div>
 
-      {/* ORTAK BELGELER */}
-      <div className="space-y-6 border-t pt-6">
-        <h3 className="text-xl font-semibold">Ortak Zorunlu Belgeler</h3>
-
-        <FormFile id="cv" label="YÖKSİS formatında özgeçmiş (.pdf)" />
-        <FormFile id="diplomas" label="Lisans ve Lisansüstü diplomalar (.pdf)" multiple />
-        <FormFile id="language" label="Yabancı Dil Belgesi (YDS, YÖKDİL vb.) (.pdf)" />
-        <FormFile id="pubList" label="Yayın listesi ve tam metinleri (.pdf)" multiple />
-        <FormFile id="citations" label="Atıf belgeleri (Web of Science, Scopus çıktıları) (.pdf)" multiple />
-        <FormFile id="teachingLoad" label="Ders yükü çizelgeleri (son 3 yıl) (.pdf)" />
-        <FormFile id="thesisAdvising" label="Tamamlanmış tez danışmanlıkları (.pdf)" />
-        <FormFile id="projects" label="Görev alınan projelere dair belgeler (.pdf)" />
-        <FormFile id="mainWorks" label="Başlıca eser, patent veya başvuru belgeleri (.pdf)" />
+      {/* Ortak Belgeler */}
+      <div className="border-t pt-6 space-y-4">
+        <h3 className="text-xl font-semibold">Ortak Belgeler</h3>
+        <input type="file" multiple onChange={handleFileChange} accept=".pdf" />
       </div>
 
-      {/* KADROYA ÖZEL BELGELER */}
-      <div className="space-y-6 border-t pt-6">
+      {/* Role'e Özel Belgeler */}
+      <div className="border-t pt-6 space-y-4">
         <h3 className="text-xl font-semibold">{roleLabel[role]}'ne Özel Belgeler</h3>
 
         {role === "dr" && (
           <>
-            <FormFile id="articleA1" label="A1–A2 dergilerinde yayımlanmış en az 1 makale (.pdf)" />
-            <FormFile id="articleA4" label="A1–A4 dergilerinde yayımlanmış en az 2 makale (.pdf)" />
-            <FormFile id="articleA5" label="A1–A5 dergilerinde yayımlanmış en az 1 makale (.pdf)" />
-            <FormFile id="mainAuthorProof" label="Başlıca yazar olduğuna dair kanıt (.pdf)" />
+            <InputFile label="A1–A2 makale (.pdf)" onFileSelect={handleFileChange} />
+            <InputFile label="A1–A4 makale (.pdf)" onFileSelect={handleFileChange}/>
+            <InputFile label="A1–A5 makale (.pdf)"onFileSelect={handleFileChange} />
+            <InputFile label="Başlıca yazar kanıtı (.pdf)"onFileSelect={handleFileChange} />
           </>
         )}
 
         {role === "docent" && (
           <>
-            <FormFile id="totalArticles" label="Toplam en az 6–7 adet makale (belge ile) (.pdf)" />
-            <FormFile id="advisingProof" label="Tez danışmanlığına dair belgeler (.pdf)" />
-            <FormFile id="projectProof" label="Araştırma projeleri (BAP dışı) görev belgeleri (.pdf)" />
+            <InputFile label="Toplam 6–7 makale (.pdf)"onFileSelect={handleFileChange} />
+            <InputFile label="Tez danışmanlık belgesi (.pdf)"onFileSelect={handleFileChange} />
+            <InputFile label="Proje görev belgesi (.pdf)"onFileSelect={handleFileChange} />
           </>
         )}
 
         {role === "professor" && (
           <>
-            <FormFile id="totalArticles" label="Toplam en az 6–7 adet makale (belge ile) (.pdf)" />
-            <FormFile id="advisingProof" label="2 yüksek lisans veya 1 doktora danışmanlığına dair belgeler (.pdf)" />
-            <FormFile id="projectProof" label="Araştırma projeleri (BAP dışı) görev belgeleri (.pdf)" />
-            <FormFile id="mainAuthorArticles" label="Başlıca yazar olduğu en az 3 makale kanıtı (.pdf)" />
+            <InputFile label="Toplam 6–7 makale (.pdf)"onFileSelect={handleFileChange} />
+            <InputFile label="2 YL veya 1 Doktora danışmanlığı (.pdf)"onFileSelect={handleFileChange} />
+            <InputFile label="Araştırma proje belgeleri (.pdf)"onFileSelect={handleFileChange} />
+            <InputFile label="Başlıca yazar olduğu 3 makale (.pdf)"onFileSelect={handleFileChange} />
           </>
         )}
       </div>
@@ -79,23 +106,24 @@ export default function ApplicationForm() {
       >
         Başvuruyu Gönder
       </button>
-    </div>
+    </form>
   );
 }
 
-// 👇 Tekil belge alanı bileşeni
-function FormFile({ id, label, multiple = false }) {
+// 🔹 Dosya girişi bileşeni
+function InputFile({ label, onFileSelect }) {
   return (
-    <div className="space-y-1">
-      <label htmlFor={id} className="block font-medium">{label}</label>
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
       <input
         type="file"
-        id={id}
-        name={id}
-        multiple={multiple}
+        onChange={onFileSelect}
         accept=".pdf"
         className="w-full border rounded px-3 py-2"
       />
     </div>
   );
 }
+
+// Dosya toplamak için useState dışındaki handleFileChange fonksiyonunu dışarıda global kullanmak istiyorsan,
+// onu props olarak `InputFile` bileşenine geçirmen gerekir. Alternatif olarak yukarıdaki örnek sadeleştirilmiş versiyondur.

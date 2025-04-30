@@ -13,13 +13,13 @@ export default function ManagerLayout() {
       <nav className="bg-gray-100 p-4 flex justify-between">
         <div className="font-bold text-lg">Yönetici Paneli</div>
         <div className="space-x-4">
-          <Link to="/manager/home" className="text-blue-500 hover:text-blue-700">
+          <Link to="/manager/home" className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded">
             Dashboard
           </Link>
-          <Link to="/manager/criteria" className="text-blue-500 hover:text-blue-700">
+          <Link to="/manager/criteria" className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
             Kriter Yönetimi
           </Link>
-          <Link to="/manager/jury" className="text-blue-500 hover:text-blue-700">
+          <Link to="/manager/jury" className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
             Jüri Yönetimi
           </Link>
           <button

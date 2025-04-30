@@ -1,31 +1,15 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 export default function ManagerApplications() {
-  const [applications, setApplications] = useState([
-    {
-      id: 1,
-      aday: "Ahmet Yılmaz",
-      ilan: "Dr. Öğr. Üyesi Kadrosu",
-      durum: "Beklemede",
-      belgeler: [
-        { id: 1, ad: "Diploma.pdf", url: "/files/diploma.pdf" },
-        { id: 2, ad: "Transkript.pdf", url: "/files/transkript.pdf" },
-      ],
-      puan: 85,
-    },
-    {
-      id: 2,
-      aday: "Ayşe Kaya",
-      ilan: "Doçent Kadrosu",
-      durum: "Beklemede",
-      belgeler: [
-        { id: 1, ad: "Yabancı Dil Sertifikası.pdf", url: "/files/yabanci-dil.pdf" },
-        { id: 2, ad: "Akademik Yayınlar.pdf", url: "/files/akademik-yayinlar.pdf" },
-      ],
-      puan: 90,
-    },
-  ]);
-
+  useEffect(() => {
+    const fetchApplications = async () => {
+      const res = await fetch('http://localhost:5000/api/manager/applications');
+      const data = await res.json();
+      setApplications(data);
+    };
+    fetchApplications();
+  }, []);
+  
   const handleDownloadTablo5 = (applicationId) => {
     const application = applications.find((app) => app.id === applicationId);
     if (!application) return;
@@ -46,14 +30,22 @@ export default function ManagerApplications() {
     link.click();
   };
 
-  const handleUpdateStatus = (applicationId, status) => {
+  const handleUpdateStatus = async (applicationId, status) => {
+    await fetch(`http://localhost:5000/api/manager/applications/${applicationId}/status`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ status })
+    });
+  
     setApplications((prev) =>
       prev.map((app) =>
-        app.id === applicationId ? { ...app, durum: status } : app
+        app._id === applicationId ? { ...app, status } : app
       )
     );
   };
-
+  
   return (
     <div>
       <h1 className="text-2xl font-semibold mb-4">Başvuru Yönetimi</h1>
@@ -69,30 +61,17 @@ export default function ManagerApplications() {
           </tr>
         </thead>
         <tbody>
-          {applications.map((application) => (
-            <tr key={application.id}>
-              <td className="border border-gray-300 px-4 py-2">{application.aday}</td>
-              <td className="border border-gray-300 px-4 py-2">{application.ilan}</td>
-              <td className="border border-gray-300 px-4 py-2">{application.durum}</td>
-              <td className="border border-gray-300 px-4 py-2">{application.puan}</td>
-              <td className="border border-gray-300 px-4 py-2">
+          {ilanlar.map((ilan) => (
+            <tr key={ilan._id}>
+              <td className="border px-4 py-2">{ilan.title}</td>
+              <td className="border px-4 py-2">{ilan.category}</td>
+              <td className="border px-4 py-2">{ilan.applicationCount}</td>
+              <td className="border px-4 py-2">
                 <button
-                  onClick={() => handleDownloadTablo5(application.id)}
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2"
+                  onClick={() => setSelectedIlan(ilan)}
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
                 >
-                  Tablo 5 İndir
-                </button>
-                <button
-                  onClick={() => handleUpdateStatus(application.id, "Kabul Edildi")}
-                  className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded mr-2"
-                >
-                  Kabul Et
-                </button>
-                <button
-                  onClick={() => handleUpdateStatus(application.id, "Reddedildi")}
-                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-                >
-                  Reddet
+                  Detaylar
                 </button>
               </td>
             </tr>

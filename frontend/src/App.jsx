@@ -37,7 +37,7 @@ function App() {
         <Route path="/candidate" element={<CandidateLayout />}>
           <Route path="home" element={<CandidateHome />} />
           <Route path="applications" element={<CandidateApplications />} />
-          <Route path="apply/:id" element={<ApplyPage />} />
+          <Route path="apply" element={<ApplyPage />} />
         </Route>
 
         {/* Admin Routes */}

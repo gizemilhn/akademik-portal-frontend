@@ -1,0 +1,9 @@
+[{
+  "_id": {
+    "$oid": "68116f8fc19a08897d83b722"
+  },
+  "tc": "45678901234",
+  "password": "candidatepass",
+  "role": "candidate",
+  "__v": 0
+}]

@@ -1,17 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import JuryApplicationModal from "../../components/JuryApplicationModal";
 
 export default function JuryHome() {
+  const [applications, setApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [evaluations, setEvaluations] = useState([]);
   const navigate = useNavigate();
 
-  const applications = [
-    { id: 1, aday: "Ahmet Yılmaz", ilan: "Dr. Öğr. Üyesi Kadrosu", durum: "Beklemede" },
-    { id: 2, aday: "Mehmet Kaya", ilan: "Doçent Kadrosu", durum: "Beklemede" },
-  ];
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/applications");
+        const data = await response.json();
+        setApplications(data);
+      } catch (error) {
+        console.error("Başvurular alınamadı:", error);
+      }
+    };
+
+    fetchApplications();
+  }, []);
 
   const handleOpenModal = (application) => {
     setSelectedApplication(application);
@@ -46,15 +55,15 @@ export default function JuryHome() {
           </tr>
         </thead>
         <tbody>
-          {applications.map((application) => (
-            <tr key={application.id}>
-              <td className="border border-gray-300 px-4 py-2">{application.id}</td>
-              <td className="border border-gray-300 px-4 py-2">{application.aday}</td>
-              <td className="border border-gray-300 px-4 py-2">{application.ilan}</td>
-              <td className="border border-gray-300 px-4 py-2">{application.durum}</td>
-              <td className="border border-gray-300 px-4 py-2">
+        {applications.map((application) => (
+            <tr key={application._id}>
+              <td className="border px-4 py-2">{application._id}</td>
+              <td className="border px-4 py-2">{application.userId}</td>
+              <td className="border px-4 py-2">{application.ilanId}</td>
+              <td className="border px-4 py-2">{application.status}</td>
+              <td className="border px-4 py-2">
                 <button
-                  onClick={() => handleNavigateToEvaluation(application.id)}
+                  onClick={() => handleNavigateToEvaluation(application._id)}
                   className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
                 >
                   Değerlendir
@@ -62,6 +71,7 @@ export default function JuryHome() {
               </td>
             </tr>
           ))}
+
         </tbody>
       </table>
 

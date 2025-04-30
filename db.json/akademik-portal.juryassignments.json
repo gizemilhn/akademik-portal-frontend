@@ -1,0 +1,72 @@
+[{
+  "_id": {
+    "$oid": "681210278a2754cf23e1c030"
+  },
+  "juryId": {
+    "$oid": "68116f8fc19a08897d83b729"
+  },
+  "jobPostingId": {
+    "$oid": "681185466dbc08aad8be7381"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681210278a2754cf23e1c032"
+  },
+  "juryId": {
+    "$oid": "6811fdd09c9ab6a2b83b39bf"
+  },
+  "jobPostingId": {
+    "$oid": "681185466dbc08aad8be7381"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681210748a2754cf23e1c03a"
+  },
+  "juryId": {
+    "$oid": "6811fc1b45b90990f1f2182d"
+  },
+  "jobPostingId": {
+    "$oid": "681185466dbc08aad8be7381"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681210748a2754cf23e1c03c"
+  },
+  "juryId": {
+    "$oid": "6811fdf69c9ab6a2b83b39c5"
+  },
+  "jobPostingId": {
+    "$oid": "681185466dbc08aad8be7381"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681215679892bdb4d5d1cac5"
+  },
+  "juryId": {
+    "$oid": "68116f8fc19a08897d83b729"
+  },
+  "jobPostingId": {
+    "$oid": "681185466dbc08aad8be7381"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681215679892bdb4d5d1cac7"
+  },
+  "juryId": {
+    "$oid": "6811fdd09c9ab6a2b83b39bf"
+  },
+  "jobPostingId": {
+    "$oid": "681185466dbc08aad8be7381"
+  },
+  "__v": 0
+}]

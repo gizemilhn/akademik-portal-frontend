@@ -1,35 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ManagerJuryReports() {
-  const [juryReports, setJuryReports] = useState([
-    {
-      id: 1,
-      ilan: "Dr. Öğr. Üyesi Kadrosu",
-      aday: "Ahmet Yılmaz",
-      raporlar: [
-        { id: 1, juri: "Ali Veli", durum: "Tamamlandı", raporUrl: "/files/rapor1.pdf" },
-        { id: 2, juri: "Ayşe Yılmaz", durum: "Beklemede", raporUrl: null },
-      ],
-      nihaiDurum: "Beklemede",
-    },
-    {
-      id: 2,
-      ilan: "Doçent Kadrosu",
-      aday: "Ayşe Kaya",
-      raporlar: [
-        { id: 1, juri: "Mehmet Kaya", durum: "Tamamlandı", raporUrl: "/files/rapor2.pdf" },
-        { id: 2, juri: "Ali Veli", durum: "Tamamlandı", raporUrl: "/files/rapor3.pdf" },
-      ],
-      nihaiDurum: "Beklemede",
-    },
-  ]);
+  const [juryReports, setJuryReports] = useState([]);
 
-  const handleFinalizeDecision = (reportId, decision) => {
-    setJuryReports((prev) =>
-      prev.map((report) =>
-        report.id === reportId ? { ...report, nihaiDurum: decision } : report
-      )
-    );
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/manager/jury-reports");
+        if (!res.ok) {
+          throw new Error("Jüri raporları alınamadı");
+        }
+        const data = await res.json();
+        setJuryReports(data);
+      } catch (error) {
+        console.error("Jüri raporları alınırken hata oluştu:", error);
+        setJuryReports([]); // Hata durumunda boş bir dizi ayarla
+      }
+    };
+
+    fetchReports();
+  }, []);
+
+  const handleFinalizeDecision = async (reportId, decision) => {
+    try {
+      await fetch(`http://localhost:5000/api/manager/jury-reports/${reportId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ decision }),
+      });
+
+      setJuryReports((prev) =>
+        prev.map((report) =>
+          report._id === reportId ? { ...report, nihaiDurum: decision } : report
+        )
+      );
+      alert("Nihai karar başarıyla kaydedildi.");
+    } catch (error) {
+      console.error("Nihai karar kaydedilirken hata oluştu:", error);
+    }
   };
 
   return (
@@ -47,39 +55,20 @@ export default function ManagerJuryReports() {
           </tr>
         </thead>
         <tbody>
-          {juryReports.map((report) => (
-            <tr key={report.id}>
-              <td className="border border-gray-300 px-4 py-2">{report.ilan}</td>
-              <td className="border border-gray-300 px-4 py-2">{report.aday}</td>
-              <td className="border border-gray-300 px-4 py-2">
-                <ul className="list-disc pl-4">
-                  {report.raporlar.map((rapor) => (
-                    <li key={rapor.id}>
-                      {rapor.juri} - {rapor.durum}
-                      {rapor.raporUrl && (
-                        <a
-                          href={rapor.raporUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-500 hover:underline ml-2"
-                        >
-                          Görüntüle
-                        </a>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </td>
-              <td className="border border-gray-300 px-4 py-2">{report.nihaiDurum}</td>
+          {Array.isArray(juryReports) && juryReports.map((report) => (
+            <tr key={report._id}>
+              <td className="border border-gray-300 px-4 py-2">{report.ilan?.title || "Bilinmiyor"}</td>
+              <td className="border border-gray-300 px-4 py-2">{report.userId?.username || "Bilinmiyor"}</td>
+              <td className="border border-gray-300 px-4 py-2">{report.juryDecision || "Beklemede"}</td>
               <td className="border border-gray-300 px-4 py-2">
                 <button
-                  onClick={() => handleFinalizeDecision(report.id, "Kabul Edildi")}
+                  onClick={() => handleFinalizeDecision(report._id, "Kabul Edildi")}
                   className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded mr-2"
                 >
                   Kabul Et
                 </button>
                 <button
-                  onClick={() => handleFinalizeDecision(report.id, "Reddedildi")}
+                  onClick={() => handleFinalizeDecision(report._id, "Reddedildi")}
                   className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
                 >
                   Reddet

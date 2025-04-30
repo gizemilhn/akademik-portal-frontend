@@ -1,13 +1,19 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ManagerDashboard() {
   const navigate = useNavigate();
+  const [ilanlar, setIlanlar] = useState([]);
 
-  const ilanlar = [
-    { id: 1, baslik: "Dr. Öğr. Üyesi Kadrosu", basvuruSayisi: 12 },
-    { id: 2, baslik: "Doçent Kadrosu", basvuruSayisi: 8 },
-    { id: 3, baslik: "Profesör Kadrosu", basvuruSayisi: 5 },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:5000/api/manager/job-postings");
+      const data = await response.json();
+      setIlanlar(data);
+    };
+
+    fetchData();
+  }, []);
 
   const juriRaporlari = [
     { id: 1, ilan: "Dr. Öğr. Üyesi Kadrosu", raporDurumu: "Tamamlandı" },
@@ -22,24 +28,15 @@ export default function ManagerDashboard() {
       <table className="table-auto w-full border-collapse border border-gray-300 mb-6">
         <thead>
           <tr className="bg-gray-100">
-            <th className="border border-gray-300 px-4 py-2">İlan</th>
+            <th className="border border-gray-300 px-4 py-2">İlan Başlığı</th>
             <th className="border border-gray-300 px-4 py-2">Başvuru Sayısı</th>
-            <th className="border border-gray-300 px-4 py-2">İşlem</th>
           </tr>
         </thead>
         <tbody>
           {ilanlar.map((ilan) => (
-            <tr key={ilan.id}>
-              <td className="border border-gray-300 px-4 py-2">{ilan.baslik}</td>
-              <td className="border border-gray-300 px-4 py-2">{ilan.basvuruSayisi}</td>
-              <td className="border border-gray-300 px-4 py-2">
-                <button
-                  onClick={() => navigate(`/manager/applications/${ilan.id}`)}
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
-                >
-                  Başvuruları Görüntüle
-                </button>
-              </td>
+            <tr key={ilan._id}>
+              <td className="border border-gray-300 px-4 py-2">{ilan.title}</td>
+              <td className="border border-gray-300 px-4 py-2">{ilan.applicationCount}</td>
             </tr>
           ))}
         </tbody>

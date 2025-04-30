@@ -1,0 +1,79 @@
+[{
+  "_id": {
+    "$oid": "681185466dbc08aad8be7381"
+  },
+  "title": "Dr. Öğr. Üyesi ",
+  "description": "Bu ilan, Dr. Öğr. Üyesi pozisyonu içindir. Başvuru koşulları ve gerekli belgeler aşağıda belirtilmiştir.",
+  "applicationDeadline": {
+    "$date": "2025-06-11T00:00:00.000Z"
+  },
+  "requiredDocuments": [
+    "Özgeçmiş\"",
+    "\"Yüksek Lisans ve Doktora Diploması\"",
+    "\"Yabancı Dil Belgesi"
+  ],
+  "conditions": "Adayın en az 3 yıl öğretim deneyimine sahip olması gerekmektedir.",
+  "status": "Aktif",
+  "__v": 0,
+  "category": "Dr.Öğretim Üyesi"
+},
+{
+  "_id": {
+    "$oid": "681185d06dbc08aad8be7385"
+  },
+  "title": "Profesör Kadrosu",
+  "description": "Bu ilan, Profesör pozisyonu içindir. Başvuru için gerekli belgeler ve koşullar aşağıda belirtilmiştir.",
+  "applicationDeadline": {
+    "$date": "2025-08-01T00:00:00.000Z"
+  },
+  "requiredDocuments": [
+    "Özgeçmiş\"",
+    "\"Profesörlük Belgesi\"",
+    "\"Yayın Listesi\"",
+    "\"Yabancı Dil Belgesi\"",
+    "\"Araştırma Projeleri"
+  ],
+  "conditions": "Adayın Profesörlük unvanına sahip olması ve araştırma projelerinde aktif rol almış olması gerekmektedir.",
+  "status": "Aktif",
+  "__v": 0,
+  "category": "Profesör"
+},
+{
+  "_id": {
+    "$oid": "681186b36dbc08aad8be7391"
+  },
+  "title": "Doçent Kadrosu",
+  "description": "Bu ilan, Doçent pozisyonu içindir. Başvuru için aşağıdaki koşullara dikkat edilmesi gerekmektedir.",
+  "applicationDeadline": {
+    "$date": "2025-07-15T00:00:00.000Z"
+  },
+  "requiredDocuments": [
+    "Özgeçmiş\"",
+    "\"Doçentlik Belgesi\"",
+    "\"Yayın Listesi\"",
+    "\"Yabancı Dil Belgesi"
+  ],
+  "conditions": "Adayın en az 5 yıl akademik deneyime sahip olması ve 10 uluslararası makale yayımlamış olması gerekmektedir.",
+  "status": "Aktif",
+  "__v": 0,
+  "category": "Doçent"
+},
+{
+  "_id": {
+    "$oid": "6811b4f73ca5dcc7f35c8d45"
+  },
+  "title": "Dr. Öğr. Üyesi Kadrosu",
+  "description": "Bu ilan, Dr. Öğr. Üyesi pozisyonu içindir. Başvuru koşulları ve gerekli belgeler aşağıda belirtilmiştir.",
+  "applicationDeadline": {
+    "$date": "2025-06-30T00:00:00.000Z"
+  },
+  "requiredDocuments": [
+    "Özgeçmiş\"",
+    "\"Yüksek Lisans ve Doktora Diploması\"",
+    "\"Yabancı Dil Belgesi"
+  ],
+  "conditions": "Adayın en az 3 yıl öğretim deneyimine sahip olması gerekmektedir.",
+  "status": "Aktif",
+  "__v": 0,
+  "category": "Dr. Öğr. Üyesi"
+}]

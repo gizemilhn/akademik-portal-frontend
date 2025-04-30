@@ -1,0 +1,104 @@
+[{
+  "_id": {
+    "$oid": "68119adb32ceb3ee585acafa"
+  },
+  "category": "doktor",
+  "requirements": "Eğitim: Yüksek Lisans ve Doktora Diploması gereklidir.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68119aec32ceb3ee585acafc"
+  },
+  "category": "doktor",
+  "requirements": "Deneyim: En az 3 yıl akademik deneyim.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68119af232ceb3ee585acafe"
+  },
+  "category": "doktor",
+  "requirements": "Yayınlar: En az 2 uluslararası makale yayımlamış olmak.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68119afc32ceb3ee585acb00"
+  },
+  "category": "docent",
+  "requirements": "Eğitim: Yüksek Lisans ve Doktora diploması gereklidir.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68119b0132ceb3ee585acb02"
+  },
+  "category": "docent",
+  "requirements": "Deneyim: En az 5 yıl akademik deneyim.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68119b0832ceb3ee585acb04"
+  },
+  "category": "docent",
+  "requirements": "Yayınlar: En az 5 uluslararası makale yayımlamış olmak.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68119b0d32ceb3ee585acb06"
+  },
+  "category": "docent",
+  "requirements": "Tez Danışmanlığı: En az 2 öğrencinin tez danışmanlığını yapmış olmak.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68119b1832ceb3ee585acb08"
+  },
+  "category": "profesor",
+  "requirements": "Eğitim: Yüksek Lisans ve Doktora diploması gereklidir.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68119b1e32ceb3ee585acb0a"
+  },
+  "category": "profesor",
+  "requirements": "Deneyim: En az 10 yıl akademik deneyim.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68119b2232ceb3ee585acb0c"
+  },
+  "category": "profesor",
+  "requirements": "Yayınlar: En az 10 uluslararası makale yayımlamış olmak.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68119b2832ceb3ee585acb0e"
+  },
+  "category": "profesor",
+  "requirements": "Yüksek Lisans/Doktora Danışmanlığı: En az 3 yüksek lisans veya 1 doktora öğrencisinin danışmanlığını yapmış olmak.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68119b2d32ceb3ee585acb10"
+  },
+  "category": "profesor",
+  "requirements": "Araştırma Projeleri: Ulusal ve uluslararası araştırma projelerinde aktif rol almış olmak.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681215529892bdb4d5d1cabf"
+  },
+  "category": "docent",
+  "requirements": "Ales 75 puan almış olmak.",
+  "__v": 0
+}]

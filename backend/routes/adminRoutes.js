@@ -1,6 +1,6 @@
 const express = require('express');
 const JobPosting = require('../models/JobPosting'); // JobPosting modelini içe aktaralım
-const Candidate = require('../models/Candidate'); // Candidate modelini içe aktaralım
+const Application = require('../models/Application');
 const router = express.Router();
 
 // 1. İlanları Listeleme
@@ -16,35 +16,22 @@ router.get('/job-postings', async (req, res) => {
   
   // 2. Yeni İlan Ekleme
   router.post('/job-postings', async (req, res) => {
-    try {
-      const {
-        title,
-        description,
-        applicationDeadline,
-        requiredDocuments,
-        conditions,
-      } = req.body;
+    console.log("Gelen Veri:", req.body);
+    const { title, description, applicationDeadline, category, requiredDocuments, conditions, status } = req.body;
   
-      // Zorunlu alanlar kontrolü
-      if (!title || !description || !applicationDeadline || !conditions) {
-        return res.status(400).json({ message: 'Başlık, açıklama, son başvuru tarihi ve koşullar zorunludur.' });
-      }
+    const jobPosting = new JobPosting({
+      title,
+      description,
+      applicationDeadline,
+      category, // Kategori seçimi burada
+      requiredDocuments,
+      conditions,
+      status,
+    });
   
-      const newJobPosting = new JobPosting({
-        title,
-        description,
-        applicationDeadline,
-        requiredDocuments,
-        conditions,
-        status: 'Aktif', // Varsayılan durum
-      });
+    await jobPosting.save();
   
-      const savedJobPosting = await newJobPosting.save();
-      res.status(201).json(savedJobPosting);
-    } catch (error) {
-      console.error('İlan eklenirken hata oluştu:', error);
-      res.status(500).json({ message: 'Sunucu hatası' });
-    }
+    res.status(201).json(jobPosting); // Başarıyla kaydedilen ilanı geri gönderiyoruz
   });
   
   // 3. İlan Güncelleme
@@ -97,16 +84,14 @@ router.get('/job-postings', async (req, res) => {
 
 // 5. Başvuruları Listeleme
 router.get('/applications', async (req, res) => {
-    try {
-      const applications = await Application.find()
-        .populate('candidate')  // Candidate bilgileriyle birlikte başvuruları getiriyoruz
-        .populate('jobPosting'); // JobPosting bilgileriyle birlikte başvuruları getiriyoruz
-  
-      res.json(applications);
-    } catch (error) {
-      res.status(500).json({ error: 'Başvurular alınırken hata oluştu' });
-    }
-  });
+  try {
+    const applications = await Application.find();
+    res.status(200).json(applications); // Başvuruları döndür
+  } catch (error) {
+    console.error('Başvurular alınırken hata oluştu:', error);
+    res.status(500).json({ message: 'Başvurular alınamadı' });
+  }
+});
 
 // 6. Başvuru Yönlendirme
 router.post('/applications/:id/forward', async (req, res) => {

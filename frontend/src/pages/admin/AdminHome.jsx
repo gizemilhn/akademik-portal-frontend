@@ -26,6 +26,7 @@ export default function AdminHome() {
           <tr className="bg-gray-100">
             <th className="border border-gray-300 px-4 py-2">#</th>
             <th className="border border-gray-300 px-4 py-2">Başlık</th>
+            <th className="border border-gray-300 px-4 py-2">Kategori</th>
             <th className="border border-gray-300 px-4 py-2">Durum</th>
             <th className="border border-gray-300 px-4 py-2">Başvuru Tarihi</th>
           </tr>
@@ -35,6 +36,7 @@ export default function AdminHome() {
             <tr key={ilan._id}>
               <td className="border border-gray-300 px-4 py-2">{ilan._id}</td>
               <td className="border border-gray-300 px-4 py-2">{ilan.title}</td>
+              <td className="border border-gray-300 px-4 py-2">{ilan.category}</td>
               <td className="border border-gray-300 px-4 py-2">{ilan.status}</td>
               <td className="border border-gray-300 px-4 py-2">
                 {new Date(ilan.applicationDeadline).toLocaleDateString()} {/* Başvuru tarihini doğru formatta göster */}

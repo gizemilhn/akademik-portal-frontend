@@ -1,0 +1,63 @@
+[{
+  "_id": {
+    "$oid": "68116f8fc19a08897d83b724"
+  },
+  "username": "adminuser",
+  "password": "adminpass",
+  "role": "admin",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68116f8fc19a08897d83b726"
+  },
+  "username": "manageruser",
+  "password": "managerpass",
+  "role": "manager",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68116f8fc19a08897d83b729"
+  },
+  "username": "juryuser",
+  "password": "jurypass",
+  "role": "jury",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6811fc1b45b90990f1f2182d"
+  },
+  "username": "12345678901",
+  "password": "jurypass1",
+  "role": "jury",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6811fdd09c9ab6a2b83b39bf"
+  },
+  "username": "23456789012",
+  "password": "jurypass",
+  "role": "jury",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6811fdf69c9ab6a2b83b39c5"
+  },
+  "username": "11111111111",
+  "password": "jurypass2",
+  "role": "jury",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681202224408c56e84299eae"
+  },
+  "username": "01234567890",
+  "password": "jurypass3",
+  "role": "jury",
+  "__v": 0
+}]

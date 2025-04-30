@@ -1,0 +1,159 @@
+[{
+  "_id": {
+    "$oid": "6811e45ea3794c52d7918241"
+  },
+  "ilanId": "123456",
+  "userId": "789012",
+  "documents": [
+    "uploads\\1746003038218.pdf",
+    "uploads\\1746003038223.pdf",
+    "uploads\\1746003038228.pdf",
+    "uploads\\1746003038230.pdf",
+    "uploads\\1746003038232.pdf"
+  ],
+  "status": "Beklemede",
+  "submissionDate": {
+    "$date": "2025-04-30T08:50:38.242Z"
+  },
+  "__v": 0,
+  "juryDecision": "Olumlu",
+  "juryNote": "85",
+  "juryReport": "uploads\\1746015787615.pdf"
+},
+{
+  "_id": {
+    "$oid": "681215bf9892bdb4d5d1cad4"
+  },
+  "ilanId": "123456",
+  "userId": "789012",
+  "documents": [
+    "uploads\\1746015679724.pdf",
+    "uploads\\1746015679726.pdf",
+    "uploads\\1746015679729.pdf",
+    "uploads\\1746015679730.pdf",
+    "uploads\\1746015679732.pdf"
+  ],
+  "status": "Beklemede",
+  "juryReport": null,
+  "juryNote": "",
+  "juryDecision": "Kabul Edildi",
+  "submissionDate": {
+    "$date": "2025-04-30T12:21:19.735Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681215cb9892bdb4d5d1cad6"
+  },
+  "ilanId": "123456",
+  "userId": "789012",
+  "documents": [
+    "uploads\\1746015691337.pdf",
+    "uploads\\1746015691340.pdf",
+    "uploads\\1746015691342.pdf",
+    "uploads\\1746015691344.pdf",
+    "uploads\\1746015691346.pdf",
+    "uploads\\1746015691350.pdf"
+  ],
+  "status": "Beklemede",
+  "juryReport": null,
+  "juryNote": "",
+  "juryDecision": "Beklemede",
+  "submissionDate": {
+    "$date": "2025-04-30T12:21:31.355Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681215cb9892bdb4d5d1cad8"
+  },
+  "ilanId": "123456",
+  "userId": "789012",
+  "documents": [
+    "uploads\\1746015691973.pdf",
+    "uploads\\1746015691976.pdf",
+    "uploads\\1746015691978.pdf",
+    "uploads\\1746015691980.pdf",
+    "uploads\\1746015691982.pdf",
+    "uploads\\1746015691983.pdf"
+  ],
+  "status": "Beklemede",
+  "juryReport": null,
+  "juryNote": "",
+  "juryDecision": "Kabul Edildi",
+  "submissionDate": {
+    "$date": "2025-04-30T12:21:31.992Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681215cc9892bdb4d5d1cada"
+  },
+  "ilanId": "123456",
+  "userId": "789012",
+  "documents": [
+    "uploads\\1746015692187.pdf",
+    "uploads\\1746015692190.pdf",
+    "uploads\\1746015692192.pdf",
+    "uploads\\1746015692194.pdf",
+    "uploads\\1746015692196.pdf",
+    "uploads\\1746015692198.pdf"
+  ],
+  "status": "Beklemede",
+  "juryReport": null,
+  "juryNote": "",
+  "juryDecision": "Beklemede",
+  "submissionDate": {
+    "$date": "2025-04-30T12:21:32.203Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681215d09892bdb4d5d1cadc"
+  },
+  "ilanId": "123456",
+  "userId": "789012",
+  "documents": [
+    "uploads\\1746015696178.pdf",
+    "uploads\\1746015696180.pdf",
+    "uploads\\1746015696181.pdf",
+    "uploads\\1746015696183.pdf",
+    "uploads\\1746015696185.pdf",
+    "uploads\\1746015696186.pdf"
+  ],
+  "status": "Beklemede",
+  "juryReport": null,
+  "juryNote": "",
+  "juryDecision": "Beklemede",
+  "submissionDate": {
+    "$date": "2025-04-30T12:21:36.190Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "681215d09892bdb4d5d1cade"
+  },
+  "ilanId": "123456",
+  "userId": "789012",
+  "documents": [
+    "uploads\\1746015696389.pdf",
+    "uploads\\1746015696391.pdf",
+    "uploads\\1746015696392.pdf",
+    "uploads\\1746015696394.pdf",
+    "uploads\\1746015696395.pdf",
+    "uploads\\1746015696397.pdf"
+  ],
+  "status": "Beklemede",
+  "juryReport": null,
+  "juryNote": "",
+  "juryDecision": "Beklemede",
+  "submissionDate": {
+    "$date": "2025-04-30T12:21:36.402Z"
+  },
+  "__v": 0
+}]

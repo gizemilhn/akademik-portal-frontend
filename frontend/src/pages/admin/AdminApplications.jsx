@@ -1,45 +1,43 @@
+import { useState, useEffect } from "react";
+import ApplicationDetailsModal from "../../components/ApplicationDetailsModal";
+
 export default function AdminApplications() {
-  const [basvurular, setBasvurular] = useState([]);
-  const [selectedBasvuru, setSelectedBasvuru] = useState(null);
+  const [applications, setApplications] = useState([]); // Boş bir dizi olarak başlat
+  const [selectedApplication, setSelectedApplication] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Başvuruları API'den çekme
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/admin/applications');
+        const response = await fetch("http://localhost:5000/api/admin/applications");
+        if (!response.ok) {
+          throw new Error("Başvurular alınamadı");
+        }
         const data = await response.json();
-        setBasvurular(data);
+        setApplications(data); // Gelen veriyi state'e kaydet
       } catch (error) {
         console.error("Başvurular alınırken hata oluştu:", error);
+        setApplications([]); // Hata durumunda boş bir dizi ayarla
       }
     };
 
     fetchApplications();
   }, []);
 
-  const handleOpenModal = (basvuru) => {
-    setSelectedBasvuru(basvuru);
+  const handleOpenModal = (application) => {
+    setSelectedApplication(application);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setSelectedBasvuru(null);
+    setSelectedApplication(null);
     setIsModalOpen(false);
   };
 
-  const handleForward = (basvuru) => {
-    fetch(`http://localhost:5000/api/admin/applications/${basvuru._id}/forward`, {
-      method: 'POST',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        alert(`Başvuru "${basvuru.candidate.name}" yetkililere yönlendirildi.`);
-        handleCloseModal();
-      })
-      .catch((error) => {
-        console.error("Başvuru yönlendirilirken hata oluştu:", error);
-      });
+  const handleForward = (application) => {
+    alert(`Başvuru "${application.userId}" yetkililere yönlendirildi.`);
+    handleCloseModal();
   };
 
   return (
@@ -56,16 +54,16 @@ export default function AdminApplications() {
           </tr>
         </thead>
         <tbody>
-          {basvurular.map((basvuru) => (
-            <tr key={basvuru._id}>
-              <td className="border border-gray-300 px-4 py-2">{basvuru._id}</td>
-              <td className="border border-gray-300 px-4 py-2">{basvuru.candidate.name}</td>
-              <td className="border border-gray-300 px-4 py-2">{basvuru.jobPosting.title}</td>
-              <td className="border border-gray-300 px-4 py-2">{basvuru.status}</td>
+          {Array.isArray(applications) && applications.map((application) => (
+            <tr key={application._id}>
+              <td className="border border-gray-300 px-4 py-2">{application._id}</td>
+              <td className="border border-gray-300 px-4 py-2">{application.userId}</td>
+              <td className="border border-gray-300 px-4 py-2">{application.ilanId}</td>
+              <td className="border border-gray-300 px-4 py-2">{application.status}</td>
               <td className="border border-gray-300 px-4 py-2">
                 <button
                   className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
-                  onClick={() => handleOpenModal(basvuru)}
+                  onClick={() => handleOpenModal(application)}
                 >
                   Detayları Görüntüle
                 </button>
@@ -79,7 +77,7 @@ export default function AdminApplications() {
       <ApplicationDetailsModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        basvuru={selectedBasvuru}
+        application={selectedApplication}
         onForward={handleForward}
       />
     </div>

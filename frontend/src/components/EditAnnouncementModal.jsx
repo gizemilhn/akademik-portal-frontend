@@ -5,6 +5,7 @@ export default function EditAnnouncementModal({ isOpen, onClose, ilan, onSave, o
     title: "",
     description: "",
     applicationDeadline: "",
+    category: "",
     requiredDocuments: [],
     conditions: "",
     status: "Aktif", // Varsayılan olarak Aktif
@@ -17,6 +18,7 @@ export default function EditAnnouncementModal({ isOpen, onClose, ilan, onSave, o
         title: ilan.title,
         description: ilan.description,
         applicationDeadline: new Date(ilan.applicationDeadline).toISOString().slice(0, 10), // YYYY-MM-DD formatında alıyoruz
+        category: ilan.category || "", 
         requiredDocuments: ilan.requiredDocuments || [],
         conditions: ilan.conditions,
         status: ilan.status || "Aktif",
@@ -27,6 +29,7 @@ export default function EditAnnouncementModal({ isOpen, onClose, ilan, onSave, o
         title: "",
         description: "",
         applicationDeadline: "",
+        category: "",
         requiredDocuments: [],
         conditions: "",
         status: "Aktif",
@@ -41,11 +44,13 @@ export default function EditAnnouncementModal({ isOpen, onClose, ilan, onSave, o
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(formData); 
+    console.log("Gönderilen Veri:", formData);
+    onSave({ ...formData, _id: ilan ? ilan._id : undefined }); 
     setFormData({
       title: "",
       description: "",
       applicationDeadline: "",
+      category: "",
       requiredDocuments: [],
       conditions: "",
       status: "Aktif",
@@ -101,6 +106,20 @@ export default function EditAnnouncementModal({ isOpen, onClose, ilan, onSave, o
               className="w-full border border-gray-300 p-2 rounded"
               required
             />
+          </div>
+          <div>
+             <label className="block text-sm font-medium">Kategori</label>
+             <select
+               name="category"
+               value={formData.category}
+               onChange={handleChange}
+               className="w-full border border-gray-300 p-2 rounded"
+                >
+               <option value="">Kategori Seç</option>
+               <option value="Dr. Öğr. Üyesi">Dr. Öğr. Üyesi</option>
+               <option value="Doçent">Doçent</option>
+               <option value="Profesör">Profesör</option>
+             </select>
           </div>
           <div>
             <label className="block text-sm font-medium">Gerekli Belgeler (Virgülle ayırın)</label>
